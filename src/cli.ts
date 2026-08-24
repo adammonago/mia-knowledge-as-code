@@ -2,12 +2,13 @@
 
 import { stdin as stdinStream } from "node:process";
 import { createInterface } from "node:readline/promises";
-import { readdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readdirSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
 import { auditWorkspace } from "./application/audit-workspace.js";
 import { initWorkspace } from "./application/init-workspace.js";
 import { newArtifact } from "./application/new-artifact.js";
 import { resolveInitDirectory } from "./application/resolve-init-dir.js";
+import { resolveWorkspaceDirectory } from "./application/resolve-workspace-dir.js";
 import { validateWorkspace } from "./application/validate-workspace.js";
 import { parseArgs } from "./controllers/parse-args.js";
 import { ToolkitError } from "./domain/types.js";
@@ -34,11 +35,11 @@ async function main(): Promise<void> {
     return;
   }
   if (parsed.command === "validate") {
-    runValidate(resolve(parsed.dir));
+    runValidate(workspaceRoot(parsed.dir));
     return;
   }
   if (parsed.command === "audit") {
-    runAudit(resolve(parsed.dir));
+    runAudit(workspaceRoot(parsed.dir));
     return;
   }
   runNew(parsed, templates);
@@ -142,7 +143,7 @@ function runNew(
   templates: FileTemplates,
 ): void {
   const dest = newArtifact(
-    new FileWorkspace(resolve(parsed.dir)),
+    new FileWorkspace(workspaceRoot(parsed.dir)),
     templates,
     parsed.kind,
     parsed.slug,
@@ -161,7 +162,7 @@ function initSuccess(target: string, created: number): string {
     "  2. Replace concepts/getting-started.md with one file worth keeping",
     "  3. Point your agent at AGENTS.md",
     "",
-    "Then, from the toolkit checkout: npm run kac -- validate [dir]   and   npm run kac -- audit [dir]",
+    `Then, from the toolkit checkout: npm run kac -- validate ${displayPath(target)}   and   npm run kac -- audit ${displayPath(target)}`,
     "",
   ].join("\n");
 }
@@ -192,6 +193,21 @@ New:
 If you omit [dir] and the current folder already has files, init creates ./knowledge
 so it will not clutter an existing project.
 `;
+}
+
+function workspaceRoot(dir: string): string {
+  return resolveWorkspaceDirectory({
+    requested: resolve(dir),
+    hasKacYaml: (candidate) => existsSync(join(candidate, "kac.yaml")),
+  });
+}
+
+function displayPath(target: string): string {
+  const rel = relative(process.cwd(), target);
+  if (rel.length === 0) {
+    return ".";
+  }
+  return rel.startsWith("..") ? target : rel;
 }
 
 function isEmptyDir(dir: string): boolean {

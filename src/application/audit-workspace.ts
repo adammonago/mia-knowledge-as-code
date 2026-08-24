@@ -17,7 +17,7 @@ export function auditWorkspace(workspace: WorkspacePort): AuditFinding[] {
   if (!workspace.exists("kac.yaml")) {
     throw new ToolkitError(
       "audit",
-      "No kac.yaml here. Run `kac init` first, or pass the workspace path.",
+      "No kac.yaml here. Run `kac init` first, or pass the workspace path (after a clone, that is usually ./knowledge).",
     );
   }
 

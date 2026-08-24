@@ -26,13 +26,15 @@ cd mia-knowledge-as-code
 npm install
 npm run build
 npm run kac -- init --yes --name "Proof registry" --domain "Defensible claims for proposals."
-npm run kac -- validate
-npm run kac -- audit
+npm run kac -- validate ./knowledge
+npm run kac -- audit ./knowledge
 ```
 
 `--` is required so flags go to the CLI, not to npm. `npm install` also compiles `dist/` via the `prepare` script; `npm run build` is the explicit compile step if you skip a fresh install.
 
-If the current folder already has files, init creates `./knowledge` so it will not clutter an existing project. Pass a path to choose the location, and pass that path to later commands:
+A clone is never empty, so init writes the workspace to `./knowledge` instead of overwriting this repo. `validate` and `audit` without a path look in the current folder first, then `./knowledge` if that is where `kac.yaml` landed.
+
+Pass a path to choose a different location, and pass that path to later commands:
 
 ```bash
 npm run kac -- init ./memory --yes --scale team --owner "Ada"

@@ -11,7 +11,7 @@ export function validateWorkspace(workspace: WorkspacePort): Issue[] {
   if (!workspace.exists("kac.yaml")) {
     throw new ToolkitError(
       "validate",
-      "No kac.yaml here. Run this in a workspace created by `kac init`, or pass the workspace path.",
+      "No kac.yaml here. Run this in a workspace created by `kac init`, or pass the workspace path (after a clone, that is usually ./knowledge).",
     );
   }
 
