@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knowledge-as-code.dev/schemas/concept.schema.json",
+  "title": "Knowledge as Code portable unit",
+  "type": "object",
+  "required": ["type", "title"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Kind of concept. OKF requires this; consumers tolerate unknown values."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "id": { "type": "string", "description": "Stable identifier. Defaults to filename slug if omitted." },
+    "description": { "type": "string" },
+    "status": { "enum": ["draft", "stable", "retired", "deprecated"] },
+    "confidence": { "type": "string" },
+    "evidence_tier": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": true
+}

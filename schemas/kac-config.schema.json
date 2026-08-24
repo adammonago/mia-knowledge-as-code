@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knowledge-as-code.dev/schemas/kac-config.schema.json",
+  "title": "Knowledge as Code workspace config",
+  "type": "object",
+  "required": ["version", "title", "domain", "scale"],
+  "properties": {
+    "version": { "const": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "domain": { "type": "string", "minLength": 1 },
+    "scale": { "enum": ["solo", "team"] },
+    "owner": { "type": "string" },
+    "primer": { "type": "string", "default": "primer.md" },
+    "primer_max_lines": { "type": "integer", "minimum": 1, "default": 80 },
+    "paths": {
+      "type": "object",
+      "properties": {
+        "concepts": { "type": "string" },
+        "retired": { "type": "string" },
+        "skills": { "type": "string" }
+      }
+    }
+  }
+}

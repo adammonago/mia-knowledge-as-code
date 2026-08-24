@@ -1,0 +1,11 @@
+version: 1
+title: "{{title}}"
+domain: "{{domain}}"
+scale: {{scale}}
+owner: "{{owner}}"
+primer: primer.md
+primer_max_lines: {{primer_max_lines}}
+paths:
+  concepts: concepts
+  retired: retired
+  skills: skills

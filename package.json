@@ -1,0 +1,43 @@
+{
+  "name": "knowledge-as-code",
+  "version": "0.1.0",
+  "description": "Open toolkit for Knowledge as Code workspaces: portable files, retirement records, thin primers, and a one-command init.",
+  "type": "module",
+  "bin": {
+    "kac": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "templates",
+    "schemas",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test dist/domain/*.test.js dist/application/*.test.js dist/controllers/*.test.js",
+    "prepublishOnly": "tsc",
+    "kac": "node dist/cli.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "knowledge-as-code",
+    "okf",
+    "knowledge-management",
+    "agents",
+    "markdown"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
+  }
+}

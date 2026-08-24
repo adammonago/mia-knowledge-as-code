@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knowledge-as-code.dev/schemas/retirement-record.schema.json",
+  "title": "Retirement Record",
+  "description": "Required when status is retired or deprecated. Deletion without annotation is the failure.",
+  "type": "object",
+  "required": ["status", "stopped_asserting", "why", "falsifiers"],
+  "properties": {
+    "status": { "enum": ["retired", "deprecated"] },
+    "stopped_asserting": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The claim as it stood, not a vague deprecated note."
+    },
+    "why": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Provenance gap, better source, failed corroboration, or policy change."
+    },
+    "falsifiers": {
+      "type": "string",
+      "minLength": 1,
+      "description": "When the retirement itself should be reviewed again."
+    },
+    "redirects_to": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

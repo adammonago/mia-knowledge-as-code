@@ -1,0 +1,6 @@
+---
+description: Load the Knowledge as Code primer before answering from this workspace.
+alwaysApply: true
+---
+
+Read `primer.md` before answering questions about this workspace. Keep retired files out of primary answers unless the user asks why a claim changed. Do not dump `concepts/` into context.
