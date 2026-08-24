@@ -16,23 +16,31 @@ It is not a wiki, a RAG chatbot, or a prompt pack.
 
 ## Start a workspace
 
-```bash
-npx knowledge-as-code init
-```
+Requires **Node.js 20** or newer.
 
-Or from a clone of this repo:
+Clone this repo, install, and run the CLI through npm scripts. The `kac` binary is not on your PATH until you `npm link` or the package is published.
 
 ```bash
+git clone https://github.com/adammonago/mia-knowledge-as-code.git
+cd mia-knowledge-as-code
 npm install
 npm run build
-node dist/cli.js init --yes --name "Proof registry" --domain "Defensible claims for proposals."
+npm run kac -- init --yes --name "Proof registry" --domain "Defensible claims for proposals."
+npm run kac -- validate
+npm run kac -- audit
 ```
 
-If the current folder already has files, init creates `./knowledge` so it will not clutter an existing project. Pass a path to choose the location:
+`--` is required so flags go to the CLI, not to npm. `npm install` also compiles `dist/` via the `prepare` script; `npm run build` is the explicit compile step if you skip a fresh install.
+
+If the current folder already has files, init creates `./knowledge` so it will not clutter an existing project. Pass a path to choose the location, and pass that path to later commands:
 
 ```bash
-kac init ./memory --yes --scale team --owner "Ada"
+npm run kac -- init ./memory --yes --scale team --owner "Ada"
+npm run kac -- validate ./memory
+npm run kac -- new concept ship-date-claim --dir ./memory
 ```
+
+A generated workspace does not install `kac`. Keep using this checkout (`npm run kac -- … [dir]`), or `npm link` after build if you want a local `kac` on PATH. Running `kac validate` inside the new folder will not work by itself.
 
 You get:
 
@@ -43,15 +51,9 @@ You get:
 - `AGENTS.md` plus a Cursor rule that loads the primer
 - `kac.yaml` — workspace contract
 
-Then:
-
-```bash
-kac validate
-kac audit
-kac new concept ship-date-claim
-```
-
 Point your agent at `AGENTS.md`. Do not dump the vault into context.
+
+Once this package is on npm, the one-liner will be `npx knowledge-as-code init`. That is not the working path yet.
 
 ## Commands
 
@@ -61,6 +63,8 @@ Point your agent at `AGENTS.md`. Do not dump the vault into context.
 | `kac new concept\|retirement\|skill <slug>` | Add the next durable unit |
 | `kac validate [dir]` | Lint frontmatter, unique IDs, primer budget, Retirement Record fields |
 | `kac audit [dir]` | Probe Substrate / Semantics / System |
+
+From this checkout, invoke them as `npm run kac -- <command> …`.
 
 Init flags: `--name`, `--domain`, `--scale solo|team`, `--owner`, `--yes`, `--force`, `--no-skills`.
 

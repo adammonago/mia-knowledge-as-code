@@ -161,7 +161,7 @@ function initSuccess(target: string, created: number): string {
     "  2. Replace concepts/getting-started.md with one file worth keeping",
     "  3. Point your agent at AGENTS.md",
     "",
-    "Then: kac validate   and   kac audit",
+    "Then, from the toolkit checkout: npm run kac -- validate [dir]   and   npm run kac -- audit [dir]",
     "",
   ].join("\n");
 }

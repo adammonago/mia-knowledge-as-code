@@ -19,12 +19,12 @@ Tools are surfaces. These files are the contract.
 1. Edit `primer.md` (keep it thin — under {{primer_max_lines}} essential lines).
 2. Replace `concepts/getting-started.md` with one file worth keeping: a claim, a decision, or a reject list.
 3. Point your agent at `AGENTS.md`.
-4. Run `kac validate` and `kac audit`.
+4. From the toolkit checkout, run `npm run kac -- validate [dir]` and `npm run kac -- audit [dir]` (pass this folder if you are not already in it). `kac` is not on PATH until the toolkit is linked or published.
 
 ```bash
-kac new concept my-claim
-kac new retirement old-claim
-kac new skill review-gate
+npm run kac -- new concept my-claim --dir [dir]
+npm run kac -- new retirement old-claim --dir [dir]
+npm run kac -- new skill review-gate --dir [dir]
 ```
 
 ## Retirement
@@ -34,6 +34,6 @@ Do not delete knowledge that turned out to be wrong. Move it to `retired/` with 
 ## Cadence
 
 - Weekly: enrich one concept; retire stale claims in the open.
-- Quarterly: run `kac audit` and answer the questions it cannot probe from files.
+- Quarterly: run `npm run kac -- audit [dir]` from the toolkit checkout and answer the questions it cannot probe from files.
 
 Initialized {{date}} · scale: {{scale}} · owner: {{owner}}
